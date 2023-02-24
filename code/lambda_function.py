@@ -71,14 +71,14 @@ def preprcess_file(image_path):
     #             image,
     #             "image.png")
             
-    extractor = Textractor(profile_name="default")
+    extractor = Textractor(profile_name="eu-west-1")
     document = extractor.analyze_document(
     file_source=Image.open(image_path),
     features=[TextractFeatures.QUERIES,TextractFeatures.TABLES],
     queries=queries
 )
 
-
+    print(len(table))
     table = EntityList(document.tables)
     if len(table) ==2:
         df =  table[1].to_pandas()
@@ -254,7 +254,7 @@ def preprcess_file(image_path):
     for key, value in party_dictionary.items():
         part += f"{key} ={value},"
     part = part[:-1]
-
+    print("All done")
     country_name= 1
     if table_name == "PU_RESULT_TABLE":
         election = "Presidential elections"
@@ -269,6 +269,7 @@ def preprcess_file(image_path):
             sql = f"Update {table_name} SET {part},{numberquery},status='collated' where lga_id={lga_name} and ward_id={ward_name} and pu_id = {pu_name}"
             cur.execute(sql)
             sql1 = f"""SELECT * FROM {table_name} where  lga_id = {lga_name} and ward_id = {ward_name} and pu_id= {pu_name}"""
+            print(sql)
             final ={}
             try:
                 cur.execute(sql1)
@@ -296,7 +297,7 @@ def preprcess_file(image_path):
                 final['total'] = total_results
                 final['other_data'] = other_data_results
                 final['message'] = {f"Successfully collated {election} at PollingUnit: {results[0]['PU_NAME']}"}
-
+                print('All set')
                 return final
             except Exception as e:
                 print(e)
@@ -318,7 +319,7 @@ def lambda_handler(event, context):
     s3_client.download_file(bucket_name, key, download_path)
 
     response = preprcess_file(download_path)
-    
+    print(response)
     return {
         'statusCode': 200,
         'headers':{
