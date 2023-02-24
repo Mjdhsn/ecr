@@ -8,7 +8,6 @@ import json
 from io import BytesIO
 import time
 import os
-from utils import  get_db2
 import boto3
 from urllib.parse import unquote_plus
 import json
