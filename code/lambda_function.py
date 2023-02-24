@@ -71,7 +71,7 @@ def preprcess_file(image_path):
     #             image,
     #             "image.png")
             
-    extractor = Textractor(profile_name="eu-west-1")
+    extractor = Textractor(profile_name="default")
     document = extractor.analyze_document(
     file_source=Image.open(image_path),
     features=[TextractFeatures.QUERIES,TextractFeatures.TABLES],
