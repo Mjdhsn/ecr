@@ -71,7 +71,6 @@ def preprcess_file(image_path):
     #             image,
     #             "image.png")
             
-    source=Image.open("image.png")
     extractor = Textractor(profile_name="default")
     document = extractor.analyze_document(
     file_source=Image.open(image_path),
