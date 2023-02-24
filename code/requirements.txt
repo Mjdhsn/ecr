@@ -1,0 +1,11 @@
+
+
+requests
+pandas
+pillow
+snowflake-connector-python[pandas]
+python-dotenv
+boto3
+scikit-image
+opencv-python
+amazon-textract-textractor[pdf,torch]
